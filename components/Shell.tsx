@@ -2,10 +2,13 @@ import {
   Button,
   Flex,
   Heading,
+  HStack,
   Spacer,
+  Text,
   useColorMode,
   VStack
 } from '@chakra-ui/react'
+import { useRouter } from 'next/router'
 import Footer from './Footer'
 import Section from './Section'
 import Seo from './Seo'
@@ -19,6 +22,7 @@ type ShellProps = {
 
 export default function Shell({ title, section, dateTime }: ShellProps) {
   const { colorMode, toggleColorMode } = useColorMode()
+  const router = useRouter()
 
   return (
     <>
@@ -40,35 +44,48 @@ export default function Shell({ title, section, dateTime }: ShellProps) {
       >
         <VStack alignItems='flex-start' h='full' w='full'>
           <Heading marginBottom={8}>Data Fetching Types in Next.js</Heading>
-          <VStack spacing={8} alignItems='flex-start'>
-            <VStack spacing={2} alignItems='flex-start'>
-              <Section
-                heading={strategies.ssg.heading}
-                description={strategies.ssg.description}
-              />
-              <Time dateTime={dateTime} opacity={section === 'SSG' ? 1 : 0} />
+          <VStack spacing={10} alignItems='flex-start'>
+            <VStack spacing={8} alignItems='flex-start'>
+              <VStack spacing={2} alignItems='flex-start'>
+                <Section
+                  heading={strategies.ssg.heading}
+                  description={strategies.ssg.description}
+                />
+                <Time dateTime={dateTime} opacity={section === 'SSG' ? 1 : 0} />
+              </VStack>
+              <VStack spacing={2} alignItems='flex-start'>
+                <Section
+                  heading={strategies.ssr.heading}
+                  description={strategies.ssr.description}
+                />
+                <Time dateTime={dateTime} opacity={section === 'SSR' ? 1 : 0} />
+              </VStack>
+              <VStack spacing={2} alignItems='flex-start'>
+                <Section
+                  heading={strategies.csr.heading}
+                  description={strategies.csr.description}
+                />
+                <Time dateTime={dateTime} opacity={section === 'CSR' ? 1 : 0} />
+              </VStack>
+              <VStack spacing={2} alignItems='flex-start'>
+                <Section
+                  heading={strategies.isr.heading}
+                  description={strategies.isr.description}
+                />
+                <Time dateTime={dateTime} opacity={section === 'ISR' ? 1 : 0} />
+              </VStack>
             </VStack>
-            <VStack spacing={2} alignItems='flex-start'>
-              <Section
-                heading={strategies.ssr.heading}
-                description={strategies.ssr.description}
-              />
-              <Time dateTime={dateTime} opacity={section === 'SSR' ? 1 : 0} />
-            </VStack>
-            <VStack spacing={2} alignItems='flex-start'>
-              <Section
-                heading={strategies.csr.heading}
-                description={strategies.csr.description}
-              />
-              <Time dateTime={dateTime} opacity={section === 'CSR' ? 1 : 0} />
-            </VStack>
-            <VStack spacing={2} alignItems='flex-start'>
-              <Section
-                heading={strategies.isr.heading}
-                description={strategies.isr.description}
-              />
-              <Time dateTime={dateTime} opacity={section === 'ISR' ? 1 : 0} />
-            </VStack>
+            <HStack>
+              <Button
+                bgColor={colorMode === 'light' ? 'pink.300' : 'pink.600'}
+                onClick={() => router.reload()}
+              >
+                Refresh Page
+              </Button>
+              <Text paddingLeft={2} color='gray.600'>
+                to see changes
+              </Text>
+            </HStack>
           </VStack>
           <Spacer />
           <Footer />
@@ -86,16 +103,16 @@ const strategies = {
   ssr: {
     heading: 'SSR: Server-side rendering',
     description:
-      'Runs on every request - fetch data before sending page tp client'
+      'Runs on every request - fetch data before sending page to client'
   },
   csr: {
     heading: 'CSR: Client-side rendering',
     description:
-      'Runs on every request - load page first and fetch data on client-side'
+      'Runs on every request - load page first and fetch data on client-side (loading... => data)'
   },
   isr: {
     heading: 'ISR: Incremental Static Regeneration',
     description:
-      'SSG and SSR combined - update data after a certain revalidation time'
+      'SSG and SSR combined - update data after a certain revalidation time (7 seconds)'
   }
 }

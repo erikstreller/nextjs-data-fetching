@@ -1,16 +1,18 @@
-import { Box, Divider, Link, Text } from '@chakra-ui/react'
+import { Box, Divider, Link, Text, useColorMode } from '@chakra-ui/react'
 
 export default function Footer() {
+  const { colorMode } = useColorMode()
+
   return (
     <>
-      <Divider />
+      <Divider paddingTop={4} />
       <Box h={8} alignItems='flex-start'>
         <Text>
           Erik Streller {new Date().getFullYear()} •{' '}
           <Link
             href='https://github.com/erikstreller/nextjs-data-fetching'
             isExternal
-            color='cyan.600'
+            color={colorMode === 'light' ? 'cyan.500' : 'cyan.600'}
           >
             Source Code
           </Link>
