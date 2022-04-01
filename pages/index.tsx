@@ -4,7 +4,7 @@ import { GetStaticProps } from 'next'
 export default function Home({ staticTime }) {
   return (
     <Shell
-      title='Data Fetching in Next.js'
+      title='SSG: Static-site generation'
       section='SSG'
       dateTime={staticTime}
     />

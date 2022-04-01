@@ -22,16 +22,12 @@ type ShellProps = {
 }
 
 export default function Shell({ title, section, dateTime }: ShellProps) {
-  const { colorMode, toggleColorMode } = useColorMode()
+  const { colorMode } = useColorMode()
   const router = useRouter()
 
   return (
     <>
       <Seo title={title} />
-
-      <Button onClick={toggleColorMode} position='fixed' top={4} right={4}>
-        Toggle {colorMode === 'light' ? 'Dark' : 'Light'}
-      </Button>
 
       <Flex
         as='main'
