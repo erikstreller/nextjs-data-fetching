@@ -1,8 +1,9 @@
-import { extendTheme } from '@chakra-ui/react'
+import { extendTheme, theme as base } from '@chakra-ui/react'
 
 const theme = extendTheme({
   fonts: {
-    body: `Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol"`
+    heading: `Inter, ${base.fonts?.heading}`,
+    body: `Inter, ${base.fonts?.body}`
   },
   fontWeights: {
     normal: 400,
