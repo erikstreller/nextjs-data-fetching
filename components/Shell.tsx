@@ -10,6 +10,7 @@ import {
 } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import Footer from './Footer'
+import Navigate from './Navigate'
 import Section from './Section'
 import Seo from './Seo'
 import Time from './Time'
@@ -43,37 +44,26 @@ export default function Shell({ title, section, dateTime }: ShellProps) {
         flexDirection='column'
       >
         <VStack alignItems='flex-start' h='full' w='full'>
-          <Heading marginBottom={8}>Data Fetching Types in Next.js</Heading>
+          <Heading>Data Fetching in Next.js</Heading>
+          <Text paddingBottom={8} color='gray.600'>
+            Click the strategies to navigate
+          </Text>
           <VStack spacing={10} alignItems='flex-start'>
             <VStack spacing={8} alignItems='flex-start'>
-              <VStack spacing={2} alignItems='flex-start'>
-                <Section
-                  heading={strategies.ssg.heading}
-                  description={strategies.ssg.description}
-                />
-                <Time dateTime={dateTime} opacity={section === 'SSG' ? 1 : 0} />
-              </VStack>
-              <VStack spacing={2} alignItems='flex-start'>
-                <Section
-                  heading={strategies.ssr.heading}
-                  description={strategies.ssr.description}
-                />
-                <Time dateTime={dateTime} opacity={section === 'SSR' ? 1 : 0} />
-              </VStack>
-              <VStack spacing={2} alignItems='flex-start'>
-                <Section
-                  heading={strategies.csr.heading}
-                  description={strategies.csr.description}
-                />
-                <Time dateTime={dateTime} opacity={section === 'CSR' ? 1 : 0} />
-              </VStack>
-              <VStack spacing={2} alignItems='flex-start'>
-                <Section
-                  heading={strategies.isr.heading}
-                  description={strategies.isr.description}
-                />
-                <Time dateTime={dateTime} opacity={section === 'ISR' ? 1 : 0} />
-              </VStack>
+              {strategies.map((strategy, id) => (
+                <Navigate href={strategy.href} key={id}>
+                  <VStack spacing={2} alignItems='flex-start'>
+                    <Section
+                      heading={strategy.heading}
+                      description={strategy.description}
+                    />
+                    <Time
+                      dateTime={dateTime}
+                      opacity={section === strategy.section ? 1 : 0}
+                    />
+                  </VStack>
+                </Navigate>
+              ))}
             </VStack>
             <HStack>
               <Button
@@ -95,24 +85,32 @@ export default function Shell({ title, section, dateTime }: ShellProps) {
   )
 }
 
-const strategies = {
-  ssg: {
+const strategies = [
+  {
+    href: '/',
     heading: 'SSG: Static-site generation',
-    description: 'Runs once at build-time - reused for each request'
+    description: 'Runs once at build-time - reused for each request',
+    section: 'SSG'
   },
-  ssr: {
+  {
+    href: '/server',
     heading: 'SSR: Server-side rendering',
     description:
-      'Runs on every request - fetch data before sending page to client'
+      'Runs on every request - fetch data before sending page to client',
+    section: 'SSR'
   },
-  csr: {
+  {
+    href: '/client',
     heading: 'CSR: Client-side rendering',
     description:
-      'Runs on every request - load page first and fetch data on client-side (loading... => data)'
+      'Runs on every request - load page first and fetch data on client-side (loading... => data)',
+    section: 'CSR'
   },
-  isr: {
+  {
+    href: '/incremental',
     heading: 'ISR: Incremental Static Regeneration',
     description:
-      'SSG and SSR combined - update data after a certain revalidation time (7 seconds)'
+      'SSG and SSR combined - update data after a certain revalidation time (7 seconds)',
+    section: 'ISR'
   }
-}
+]
